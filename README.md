@@ -36,8 +36,8 @@ When an option is not specified, its default value takes effect.
 
 ### Examples
 ```
-java -cp target/scala-2.12/AnomalyDetector-assembly-1.0.jar com.anomalydetector.AnomalyDetector "~/samples/June13_data.csv"
+java -cp target/scala-2.12/AnomalyDetector-assembly-1.0.jar com.anomalydetector.AnomalyDetector ~/samples/June13_data.csv
 ```
 ```
-java -cp target/scala-2.12/AnomalyDetector-assembly-1.0.jar com.anomalydetector.AnomalyDetector "~/samples/June13_data.csv" -tf 8 -ws 180 -act 6
+java -cp target/scala-2.12/AnomalyDetector-assembly-1.0.jar com.anomalydetector.AnomalyDetector ~/samples/June13_data.csv -tf 8 -ws 180 -act 6
 ```
