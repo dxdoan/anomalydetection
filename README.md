@@ -5,7 +5,7 @@ Simple Anomaly Detector that helps to find problems proactively in time series d
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
 ### Prerequisites
-Things you need to install the software and how to install them:
+Things you need to install the software:
 ```
 java client
 sbt 0.13.6+ (I believe)
