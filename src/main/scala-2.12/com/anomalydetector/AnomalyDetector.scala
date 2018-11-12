@@ -1,7 +1,7 @@
 package com.anomalydetector
 
-import com.anomalydetector.InputParser._
-import com.anomalydetector.MedianAbsoluteDeviation._
+import com.anomalydetector.InputParser.{parseInputs, readFile}
+import com.anomalydetector.MedianAbsoluteDeviation.getThresholdsForWindow
 
 object AnomalyDetector {
   private def getAnomalies(fullRecordings: Array[(String, Double)], windowSize: Int, thresholdFactor: Double): Array[(String, Double)] = {
@@ -22,13 +22,13 @@ object AnomalyDetector {
   def main(args: Array[String]) = {
     val (fileName, anomalyCountThreshold, windowSize, thresholdFactor) = parseInputs(args)
 
-    val anomalies = getAnomalies(readFile(fileName), windowSize, thresholdFactor).toList
+    val anomalies = getAnomalies(readFile(fileName), windowSize, thresholdFactor)
 
-    if (anomalies.size < anomalyCountThreshold)
+    if (anomalies.length < anomalyCountThreshold)
       println("No Anomalies")
     else {
-      println("Anomaly Detected!!!\nThere are " + anomalies.size + " suspicious data points. Here they are:")
-      println(anomalies)
+      println("Anomaly Detected!!!\nThere are " + anomalies.length + " suspicious data points. Here they are:")
+      anomalies.foreach(println(_))
     }
   }
 }
