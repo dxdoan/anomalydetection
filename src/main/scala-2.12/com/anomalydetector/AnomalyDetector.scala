@@ -1,13 +1,34 @@
 package com.anomalydetector
 
+import com.anomalydetector.InputParser._
+import com.anomalydetector.MedianAbsoluteDeviation._
+
 object AnomalyDetector {
-  def readFile(fileName: String): List[(String, Int)] = io.Source.fromFile(fileName)
-    .getLines
-    .map(_.split(",").map(_.trim))
-    .map(cols => (cols(0), cols(1).toInt))
-    .toList
+  private def getAnomalies(fullRecordings: Array[(String, Double)], windowSize: Int, thresholdFactor: Double): Array[(String, Double)] = {
+    val fullDataPoints = fullRecordings.map(_._2)
+
+    val (initialWindowLowerBound, initialWindowUpperBound) = getThresholdsForWindow(fullDataPoints, windowSize - 1, windowSize, thresholdFactor)
+
+    fullRecordings.zipWithIndex.filter({ case ((_, recording), index) =>
+      if (index < windowSize)
+        recording < initialWindowLowerBound || recording > initialWindowUpperBound
+      else {
+        val (lowerBound, upperBound) = getThresholdsForWindow(fullDataPoints, index, windowSize, thresholdFactor)
+        recording < lowerBound || recording > upperBound
+      }
+    }).unzip._1
+  }
 
   def main(args: Array[String]) = {
-    println(readFile(args(0)))
+    val (fileName, anomalyCountThreshold, windowSize, thresholdFactor) = parseInputs(args)
+
+    val anomalies = getAnomalies(readFile(fileName), windowSize, thresholdFactor).toList
+
+    if (anomalies.size < anomalyCountThreshold)
+      println("No Anomalies")
+    else {
+      println("Anomaly Detected!!!\nThere are " + anomalies.size + " suspicious data points. Here they are:")
+      println(anomalies)
+    }
   }
 }
