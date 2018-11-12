@@ -27,7 +27,9 @@ java -cp target/scala-2.12/AnomalyDetector-assembly-1.0.jar com.anomalydetector.
 `option(s)` help you tune the parameters of the algorithm. You could specify none or any combination of the following 3 options:
 
 `-act`: Anomaly Count Threshold. An integer, specifying a minimum number of anomalous data points for a data file to be considered "Anomaly Detected". Defaulted to 5.
+
 `-ws`: Window Size. An integer, specifying the size (number of consecutive data points) of the moving MAD window used by the algorithm. Defaulted to 60 (60 data points, or 60 minutes).
+
 `-tf`: Threshold Factor. A double, used to determine the minimum distance from the current window's median for a data point to be considered anomalous. This distance is calculated as (Threshold Factor * The median of the current window's Absolute Deviations). Threshold Factor is defaulted to 10.0.
 
 When an option is not specified, its default value takes effect.
